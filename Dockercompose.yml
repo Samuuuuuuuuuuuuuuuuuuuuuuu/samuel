@@ -1,0 +1,23 @@
+version: '1.0.3'
+services:
+  php-today:
+    build: .
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html
+  mysql-today:
+    image: mysql:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=db_sample
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=mysql-today
+      - PMA_PORT=3306
+    ports:
+      - 8082:80
